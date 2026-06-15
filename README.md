@@ -11,7 +11,7 @@ Your mission: guide the player to the your lover's destination while avoiding en
 [![Gameplay Video](https://img.youtube.com/vi/gqSG5FgoR6Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=gqSG5FgoR6Q)
 
 **Features**
-
+ 
 - Animated Player: Lively animations of the player character, courtesy of PixelFrog Assets. Enjoy fluid movements, jumps, and double jumps that bring the game to life.🔹
 - Diverse Characters: Encounter animated enemies, items, pets, and an NPC. Each character is crafted with different functions to enhance your gaming experience.🐸🦇🦏
 - Objective: Navigate through obstacles and enemies, collecting items along the way. Your goal is to reach the your lover's destination without losing all three hearts.🍥
