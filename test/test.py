@@ -1,4 +1,5 @@
 from os.path import join
+
 import pygame
 
 pygame.init()
@@ -34,8 +35,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    
+
+
     # Scroll the background
     background_scroll_x -= background_scroll_speed
 
@@ -45,7 +46,7 @@ while running:
 
     # Clear the screen
     screen.fill((0, 0, 0))
-  
+
     # Draw the background twice to achieve the scrolling effect
     screen.blit(background, (background_scroll_x, 0))
     screen.blit(background, (background_scroll_x + background.get_width(), 0))
