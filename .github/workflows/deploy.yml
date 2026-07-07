@@ -1,0 +1,67 @@
+name: Deploy web build to GitHub Pages
+
+# Builds the game to WebAssembly with pygbag and publishes it to GitHub Pages
+# so it is playable in the browser at:
+#   https://tuebachdinh.github.io/2D-Adventure-Game/
+#
+# One-time setup: in the repository settings, under "Pages", set the source to
+# "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Convert audio to OGG (pygbag requires OGG for the web build)
+        run: |
+          shopt -s nullglob
+          for f in sound/*.mp3; do
+            ffmpeg -y -i "$f" "${f%.mp3}.ogg"
+          done
+          rm -f sound/*.mp3
+
+      - name: Install pygbag
+        run: python -m pip install --upgrade pip pygbag
+
+      - name: Build web bundle
+        run: python -m pygbag --build main.py
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
