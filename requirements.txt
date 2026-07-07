@@ -1,0 +1,8 @@
+# Core game engine.
+# pygame-ce is a drop-in replacement for pygame and builds on modern Python
+# (3.12+). If you are on an older Python you may use `pygame` instead.
+pygame-ce>=2.5
+
+# Optional: only required if you want to persist end-of-game stats to a local
+# MySQL database. The game runs fine without it.
+# mysql-connector-python>=8.0

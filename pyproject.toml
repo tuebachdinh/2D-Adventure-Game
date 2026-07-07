@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blueventure"
+version = "1.1.0"
+description = "BlueVenture - a 2D pixel-art platform adventure built with pygame."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Tue Dinh (Toby)" }]
+keywords = ["game", "pygame", "platformer", "2d", "adventure"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment :: Arcade",
+]
+dependencies = ["pygame-ce>=2.5"]
+
+[project.optional-dependencies]
+mysql = ["mysql-connector-python>=8.0"]
+dev = ["ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/tuebachdinh/2D-Adventure-Game"
+Repository = "https://github.com/tuebachdinh/2D-Adventure-Game"
+Issues = "https://github.com/tuebachdinh/2D-Adventure-Game/issues"
+
+[project.scripts]
+blueventure = "main:start_menu"
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = ["game"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+# Long lines are common in the hand-authored level layout data; keep pragmatic.
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# The headless tests must configure SDL env vars / sys.path before importing
+# pygame and the game modules, so top-of-file imports are not possible.
+"test/*.py" = ["E402"]
