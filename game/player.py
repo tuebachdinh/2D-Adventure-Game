@@ -1,5 +1,6 @@
 import pygame
-from game.load_images import get_sprite_sheets, run_sprites
+
+from game.load_images import get_sprite_sheets
 
 pygame.init()
 
@@ -19,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_count = 0
         self.hit = False
         self.hit_animation = 0
-        self.hit_count = 0 
+        self.hit_count = 0
         self.SPRITES = get_sprite_sheets("MainCharacters", name, 32, 32, True)
         self.items = 0
         self.teleport = False
@@ -38,9 +39,9 @@ class Player(pygame.sprite.Sprite):
 
     def make_hit(self):
         self.hit = True
-    
+
     def make_teleport(self):
-        self.teleport = True 
+        self.teleport = True
 
     def move_left(self, vel):
         self.x_vel = -vel
@@ -62,12 +63,12 @@ class Player(pygame.sprite.Sprite):
             self.hit_animation += 1
         if self.teleport:
             self.teleport_aniamtion += 1
-        
+
         if self.teleport_aniamtion >= fps/4:
             self.teleport = False
             self.teleport_aniamtion = 0
             self.rect.x = 2600
-            
+
 
         if self.hit_animation >= fps/2:
             self.hit = False
@@ -103,18 +104,18 @@ class Player(pygame.sprite.Sprite):
         sprite_sheet_name = sprite_sheet + "_" + self.direction
         if self.teleport:
             sprites = get_sprite_sheets("MainCharacters", "State", 96, 96, True)["Desappearing (96x96)" + "_" + self.direction]
-        else: 
+        else:
             sprites = self.SPRITES[sprite_sheet_name]
-        
+
         sprite_index = (self.animation_count // self.ANIMATION_DELAY) % len(sprites)
         self.sprite = sprites[sprite_index]
         self.animation_count += 1
         self.rect = self.sprite.get_rect(topleft=(self.rect.x, self.rect.y))
         self.mask = pygame.mask.from_surface(self.sprite)
-        
+
     def draw(self, win, offset_x):
         win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y))
-    
+
 
 class NPC(Player):
     def __init__(self, x, y, width, height, name):
@@ -131,12 +132,12 @@ class NPC(Player):
             self.hit_animation += 1
         if self.teleport:
             self.teleport_aniamtion += 1
-        
+
         if self.teleport_aniamtion >= fps:
             self.teleport = False
             self.teleport_aniamtion = 0
             self.rect.x = 2800
-            
+
         if self.hit_animation >= fps/2:
             self.hit = False
             self.hit_count += 1
@@ -144,4 +145,3 @@ class NPC(Player):
 
         self.fall_count += 1
         self.update_sprite()
-    

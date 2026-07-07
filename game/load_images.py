@@ -1,6 +1,7 @@
-import pygame
 from os import listdir
 from os.path import isfile, join
+
+import pygame
 
 WIDTH, HEIGHT = 1152, 768
 
@@ -31,10 +32,11 @@ def get_background(name):
     return background.convert()
 
 def get_sprite_sheets(dir1, dir2, width, height, direction = False):
-    def flip(sprites): 
+    def flip(sprites):
         return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
     path = join("assets", dir1, dir2)
-    images = [f for f in listdir(path) if isfile(join(path, f))]
+    images = [f for f in listdir(path)
+              if isfile(join(path, f)) and f.lower().endswith(".png")]
 
     all_sprites = {}
 
@@ -87,6 +89,6 @@ def get_condition_bar(player, name):
     elif player.hit_count == 3:
         lives = pygame.font.Font(join("assets","Font", "Pixeltype.ttf"), 40).render("LIVES 0", True, "WHITE")
         condition_bar.blit(lives,(table_x[name]+20, 100 + table_y[name]))
-    
+
     return condition_bar
 
